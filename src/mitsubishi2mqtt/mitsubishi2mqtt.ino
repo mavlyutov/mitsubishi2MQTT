@@ -514,6 +514,7 @@ boolean initWifi() {
   WiFi.mode(WIFI_AP);
   wifi_timeout = millis() + WIFI_RETRY_INTERVAL_MS;
   WiFi.persistent(false); //fix crash esp32 https://github.com/espressif/arduino-esp32/issues/2025
+  WiFi.softAPConfig(apIP, apIP, netMsk);
   if (!connectWifiSuccess and login_password != "") {
     // Set AP password when falling back to AP on fail
     WiFi.softAP(hostname.c_str(), login_password);
@@ -523,7 +524,6 @@ boolean initWifi() {
     WiFi.softAP(hostname.c_str());
   }
   delay(2000); // VERY IMPORTANT
-  WiFi.softAPConfig(apIP, apIP, netMsk);
   // Serial.print(F("IP address: "));
   // Serial.println(WiFi.softAPIP());
   //ticker.attach(0.2, tick); // Start LED to flash rapidly to indicate we are ready for setting up the wifi-connection (entered captive portal).
@@ -1366,9 +1366,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     modeUpper.toUpperCase();
     if (modeUpper == "OFF") {
       hp.setPowerSetting("OFF");
-      hp.update();
-    } else if (modeUpper == "ON") {
-      hp.setPowerSetting("ON");
       hp.update();
     }
   }
