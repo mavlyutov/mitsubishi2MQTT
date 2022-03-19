@@ -16,17 +16,17 @@
 
 #include "FS.h"               // SPIFFS for store config
 #ifdef ESP32
-#include <WiFi.h>             // WIFI for ESP32
-#include <WiFiUdp.h>
-#include <ESPmDNS.h>          // mDNS for ESP32
-#include <WebServer.h>        // webServer for ESP32
-#include "SPIFFS.h"           // ESP32 SPIFFS for store config
+  #include <WiFi.h>             // WIFI for ESP32
+  #include <WiFiUdp.h>
+  #include <ESPmDNS.h>          // mDNS for ESP32
+  #include <WebServer.h>        // webServer for ESP32
+  #include "SPIFFS.h"           // ESP32 SPIFFS for store config
 WebServer server(80);         //ESP32 web
 #else
-#include <ESP8266WiFi.h>      // WIFI for ESP8266
-#include <ESP8266mDNS.h>      // mDNS for ESP8266
-#include <ESP8266WebServer.h> // webServer for ESP8266
-ESP8266WebServer server(80);  // ESP8266 web
+  #include <ESP8266WiFi.h>      // WIFI for ESP8266
+  #include <ESP8266mDNS.h>      // mDNS for ESP8266
+  #include <ESP8266WebServer.h> // webServer for ESP8266
+  ESP8266WebServer server(80);  // ESP8266 web
 #endif
 #include <ArduinoJson.h>      // json to process MQTT: ArduinoJson 6.11.4
 #include <PubSubClient.h>     // MQTT: PubSubClient 2.7.0
@@ -449,7 +449,6 @@ bool loadUnit() {
   return true;
 }
 
-
 bool loadOthers() {
   if (!SPIFFS.exists(others_conf)) {
     // Serial.println(F("Others config file not exist!"));
@@ -828,8 +827,6 @@ void handleStatus() {
   statusPage.replace(F("_WIFI_STATUS_"), String(WiFi.RSSI()));
   sendWrappedHTML(statusPage);
 }
-
-
 
 void handleControl() {
   if (!checkLogin()) return;
@@ -1587,7 +1584,7 @@ void mqttConnect() {
       return;
     }
     // We are connected
-    else    {
+    else {
       mqtt_client.subscribe(ha_debug_set_topic.c_str());
       mqtt_client.subscribe(ha_power_set_topic.c_str());
       mqtt_client.subscribe(ha_mode_set_topic.c_str());
