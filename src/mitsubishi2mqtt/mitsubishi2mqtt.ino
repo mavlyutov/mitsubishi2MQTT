@@ -113,6 +113,7 @@ void setup() {
 #else
   WiFi.hostname(hostname.c_str());
 #endif
+
   setDefaults();
   wifi_config_exists = loadWifi();
   loadOthers();
@@ -392,12 +393,12 @@ bool loadMqtt() {
   const size_t capacity = JSON_OBJECT_SIZE(6) + 400;
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
-  mqtt_fn             = doc["mqtt_fn"].as<String>();
-  mqtt_server         = doc["mqtt_host"].as<String>();
-  mqtt_port           = doc["mqtt_port"].as<String>();
-  mqtt_username       = doc["mqtt_user"].as<String>();
-  mqtt_password       = doc["mqtt_pwd"].as<String>();
-  mqtt_topic          = doc["mqtt_topic"].as<String>();
+  mqtt_fn = doc["mqtt_fn"].as<String>();
+  mqtt_server = doc["mqtt_host"].as<String>();
+  mqtt_port = doc["mqtt_port"].as<String>();
+  mqtt_username = doc["mqtt_user"].as<String>();
+  mqtt_password = doc["mqtt_pwd"].as<String>();
+  mqtt_topic = doc["mqtt_topic"].as<String>();
 
   //write_log("=== START DEBUG MQTT ===");
   //write_log("Friendly Name" + mqtt_fn);
@@ -433,11 +434,11 @@ bool loadUnit() {
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
   //unit
-  String unit_tempUnit            = doc["unit_tempUnit"].as<String>();
+  String unit_tempUnit = doc["unit_tempUnit"].as<String>();
   if (unit_tempUnit == "fah") useFahrenheit = true;
-  min_temp              = doc["min_temp"].as<uint8_t>();
-  max_temp              = doc["max_temp"].as<uint8_t>();
-  temp_step             = doc["temp_step"].as<String>();
+  min_temp = doc["min_temp"].as<uint8_t>();
+  max_temp = doc["max_temp"].as<uint8_t>();
+  temp_step = doc["temp_step"].as<String>();
   //mode
   String supportMode = doc["support_mode"].as<String>();
   if (supportMode == "nht") supportHeatMode = false;
@@ -471,11 +472,11 @@ bool loadOthers() {
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
   //unit
-  String unit_tempUnit            = doc["unit_tempUnit"].as<String>();
+  String unit_tempUnit = doc["unit_tempUnit"].as<String>();
   if (unit_tempUnit == "fah") useFahrenheit = true;
-  others_haa_topic              = doc["haat"].as<String>();
-  String haa              = doc["haa"].as<String>();
-  String debug             = doc["debug"].as<String>();
+  others_haa_topic = doc["haat"].as<String>();
+  String haa = doc["haa"].as<String>();
+  String debug = doc["debug"].as<String>();
 
   if (strcmp(haa.c_str(), "OFF") == 0) {
     others_haa = false;
@@ -678,8 +679,7 @@ void handleOthers() {
   if (server.method() == HTTP_POST) {
     saveOthers(server.arg("HAA"), server.arg("haat"), server.arg("Debug"));
     rebootAndSendPage();
-  }
-  else {
+  } else {
     String othersPage =  FPSTR(html_page_others);
     othersPage.replace("_TXT_SAVE_", FPSTR(txt_save));
     othersPage.replace("_TXT_BACK_", FPSTR(txt_back));
@@ -1480,7 +1480,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 }
 
 void haConfig() {
-
   // send HA config packet
   // setup HA payload device
   const size_t capacity = JSON_ARRAY_SIZE(5) + 2 * JSON_ARRAY_SIZE(6) + JSON_ARRAY_SIZE(7) + JSON_OBJECT_SIZE(24) + 2048;
@@ -1749,24 +1748,22 @@ void loop() {
         hp.sync();
     }
 
-  if (mqtt_config) {
-    //MQTT failed retry to connect
-    if (mqtt_client.state() < MQTT_CONNECTED)
-    {
-      if ((millis() > (lastMqttRetry + MQTT_RETRY_INTERVAL_MS)) or lastMqttRetry == 0) {
-        mqttConnect();
+    if (mqtt_config) {
+      //MQTT failed retry to connect
+      if (mqtt_client.state() < MQTT_CONNECTED) {
+        if ((millis() > (lastMqttRetry + MQTT_RETRY_INTERVAL_MS)) or lastMqttRetry == 0) {
+          mqttConnect();
+        }
+      }
+      //MQTT config problem on MQTT do nothing
+      else if (mqtt_client.state() > MQTT_CONNECTED ) return;
+      //MQTT connected send status
+      else {
+        hpStatusChanged(hp.getStatus());
+        mqtt_client.loop();
       }
     }
-    //MQTT config problem on MQTT do nothing
-    else if (mqtt_client.state() > MQTT_CONNECTED ) return;
-    //MQTT connected send status
-    else {
-      hpStatusChanged(hp.getStatus());
-      mqtt_client.loop();
-    }
-  }
-  }
-  else {
+  } else {
     dnsServer.processNextRequest();
   }
 }
