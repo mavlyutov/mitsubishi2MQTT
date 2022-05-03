@@ -22,16 +22,10 @@
   #include <ESPmDNS.h>          // mDNS for ESP32
   #include <WebServer.h>        // webServer for ESP32
   #include "SPIFFS.h"           // ESP32 SPIFFS for store config
-<<<<<<< HEAD
   WebServer server(80);         //ESP32 web
 #else
   #include <ESP8266WiFi.h>      // WIFI for ESP8266
   #include <WiFiClient.h>
-=======
-WebServer server(80);         //ESP32 web
-#else
-  #include <ESP8266WiFi.h>      // WIFI for ESP8266
->>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
   #include <ESP8266mDNS.h>      // mDNS for ESP8266
   #include <ESP8266WebServer.h> // webServer for ESP8266
   ESP8266WebServer server(80);  // ESP8266 web
@@ -535,10 +529,6 @@ boolean initWifi() {
     WiFi.softAP(hostname.c_str());
   }
   delay(2000); // VERY IMPORTANT
-<<<<<<< HEAD
-
-=======
->>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
   // Serial.print(F("IP address: "));
   // Serial.println(WiFi.softAPIP());
   //ticker.attach(0.2, tick); // Start LED to flash rapidly to indicate we are ready for setting up the wifi-connection (entered captive portal).
@@ -1768,12 +1758,7 @@ void loop() {
 
     if (mqtt_config) {
       //MQTT failed retry to connect
-<<<<<<< HEAD
-      if (mqtt_client.state() < MQTT_CONNECTED)
-      {
-=======
       if (mqtt_client.state() < MQTT_CONNECTED) {
->>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
         if ((millis() > (lastMqttRetry + MQTT_RETRY_INTERVAL_MS)) or lastMqttRetry == 0) {
           mqttConnect();
         }
@@ -1786,12 +1771,8 @@ void loop() {
         mqtt_client.loop();
       }
     }
-<<<<<<< HEAD
   }
   else {
-=======
-  } else {
->>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
     dnsServer.processNextRequest();
   }
 }
