@@ -22,10 +22,16 @@
   #include <ESPmDNS.h>          // mDNS for ESP32
   #include <WebServer.h>        // webServer for ESP32
   #include "SPIFFS.h"           // ESP32 SPIFFS for store config
+<<<<<<< HEAD
   WebServer server(80);         //ESP32 web
 #else
   #include <ESP8266WiFi.h>      // WIFI for ESP8266
   #include <WiFiClient.h>
+=======
+WebServer server(80);         //ESP32 web
+#else
+  #include <ESP8266WiFi.h>      // WIFI for ESP8266
+>>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
   #include <ESP8266mDNS.h>      // mDNS for ESP8266
   #include <ESP8266WebServer.h> // webServer for ESP8266
   ESP8266WebServer server(80);  // ESP8266 web
@@ -35,7 +41,6 @@
 #include <PubSubClient.h>     // MQTT: PubSubClient 2.8.0
 #include <DNSServer.h>        // DNS for captive portal
 #include <math.h>             // for rounding to Fahrenheit values
-
 #include <ArduinoOTA.h>   // for OTA
 #include <HeatPump.h>     // SwiCago library: https://github.com/SwiCago/HeatPump
 //#include <Ticker.h>     // for LED status (Using a Wemos D1-Mini)
@@ -116,6 +121,7 @@ void setup() {
 #else
   WiFi.hostname(hostname.c_str());
 #endif
+
   setDefaults();
   wifi_config_exists = loadWifi();
   loadOthers();
@@ -397,12 +403,12 @@ bool loadMqtt() {
   const size_t capacity = JSON_OBJECT_SIZE(6) + 400;
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
-  mqtt_fn             = doc["mqtt_fn"].as<String>();
-  mqtt_server         = doc["mqtt_host"].as<String>();
-  mqtt_port           = doc["mqtt_port"].as<String>();
-  mqtt_username       = doc["mqtt_user"].as<String>();
-  mqtt_password       = doc["mqtt_pwd"].as<String>();
-  mqtt_topic          = doc["mqtt_topic"].as<String>();
+  mqtt_fn = doc["mqtt_fn"].as<String>();
+  mqtt_server = doc["mqtt_host"].as<String>();
+  mqtt_port = doc["mqtt_port"].as<String>();
+  mqtt_username = doc["mqtt_user"].as<String>();
+  mqtt_password = doc["mqtt_pwd"].as<String>();
+  mqtt_topic = doc["mqtt_topic"].as<String>();
 
   //write_log("=== START DEBUG MQTT ===");
   //write_log("Friendly Name" + mqtt_fn);
@@ -438,11 +444,11 @@ bool loadUnit() {
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
   //unit
-  String unit_tempUnit            = doc["unit_tempUnit"].as<String>();
+  String unit_tempUnit = doc["unit_tempUnit"].as<String>();
   if (unit_tempUnit == "fah") useFahrenheit = true;
-  min_temp              = doc["min_temp"].as<uint8_t>();
-  max_temp              = doc["max_temp"].as<uint8_t>();
-  temp_step             = doc["temp_step"].as<String>();
+  min_temp = doc["min_temp"].as<uint8_t>();
+  max_temp = doc["max_temp"].as<uint8_t>();
+  temp_step = doc["temp_step"].as<String>();
   //mode
   String supportMode = doc["support_mode"].as<String>();
   if (supportMode == "nht") supportHeatMode = false;
@@ -454,7 +460,6 @@ bool loadUnit() {
   }
   return true;
 }
-
 
 bool loadOthers() {
   if (!SPIFFS.exists(others_conf)) {
@@ -477,11 +482,11 @@ bool loadOthers() {
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
   //unit
-  String unit_tempUnit            = doc["unit_tempUnit"].as<String>();
+  String unit_tempUnit = doc["unit_tempUnit"].as<String>();
   if (unit_tempUnit == "fah") useFahrenheit = true;
-  others_haa_topic              = doc["haat"].as<String>();
-  String haa              = doc["haa"].as<String>();
-  String debug             = doc["debug"].as<String>();
+  others_haa_topic = doc["haat"].as<String>();
+  String haa = doc["haa"].as<String>();
+  String debug = doc["debug"].as<String>();
 
   if (strcmp(haa.c_str(), "OFF") == 0) {
     others_haa = false;
@@ -530,7 +535,10 @@ boolean initWifi() {
     WiFi.softAP(hostname.c_str());
   }
   delay(2000); // VERY IMPORTANT
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
   // Serial.print(F("IP address: "));
   // Serial.println(WiFi.softAPIP());
   //ticker.attach(0.2, tick); // Start LED to flash rapidly to indicate we are ready for setting up the wifi-connection (entered captive portal).
@@ -685,8 +693,7 @@ void handleOthers() {
   if (server.method() == HTTP_POST) {
     saveOthers(server.arg("HAA"), server.arg("haat"), server.arg("Debug"));
     rebootAndSendPage();
-  }
-  else {
+  } else {
     String othersPage =  FPSTR(html_page_others);
     othersPage.replace("_TXT_SAVE_", FPSTR(txt_save));
     othersPage.replace("_TXT_BACK_", FPSTR(txt_back));
@@ -835,8 +842,6 @@ void handleStatus() {
   statusPage.replace(F("_WIFI_STATUS_"), String(WiFi.RSSI()));
   sendWrappedHTML(statusPage);
 }
-
-
 
 void handleControl() {
   if (!checkLogin()) return;
@@ -1489,7 +1494,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 }
 
 void haConfig() {
-
   // send HA config packet
   // setup HA payload device
   const size_t capacity = JSON_ARRAY_SIZE(5) + 2 * JSON_ARRAY_SIZE(6) + JSON_ARRAY_SIZE(7) + JSON_OBJECT_SIZE(24) + 2048;
@@ -1597,7 +1601,7 @@ void mqttConnect() {
       return;
     }
     // We are connected
-    else    {
+    else {
       mqtt_client.subscribe(ha_debug_set_topic.c_str());
       mqtt_client.subscribe(ha_power_set_topic.c_str());
       mqtt_client.subscribe(ha_mode_set_topic.c_str());
@@ -1764,8 +1768,12 @@ void loop() {
 
     if (mqtt_config) {
       //MQTT failed retry to connect
+<<<<<<< HEAD
       if (mqtt_client.state() < MQTT_CONNECTED)
       {
+=======
+      if (mqtt_client.state() < MQTT_CONNECTED) {
+>>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
         if ((millis() > (lastMqttRetry + MQTT_RETRY_INTERVAL_MS)) or lastMqttRetry == 0) {
           mqttConnect();
         }
@@ -1778,8 +1786,12 @@ void loop() {
         mqtt_client.loop();
       }
     }
+<<<<<<< HEAD
   }
   else {
+=======
+  } else {
+>>>>>>> 2b21699ec0c89170dc8eeb2332a9cd6a7333f0c9
     dnsServer.processNextRequest();
   }
 }

@@ -96,7 +96,7 @@ String temp_step                   = "1"; // Temperature setting step, check val
 
 // sketch settings
 const PROGMEM uint32_t SEND_ROOM_TEMP_INTERVAL_MS = 45000; // 45 seconds (anything less may cause bouncing)
-const PROGMEM uint32_t MQTT_RETRY_INTERVAL_MS = 1000; // 1 seconds
+const PROGMEM uint32_t MQTT_RETRY_INTERVAL_MS = 5000; // 5 seconds
 const PROGMEM uint32_t HP_RETRY_INTERVAL_MS = 1000; // 1 seconds
 const PROGMEM uint32_t HP_MAX_RETRIES = 5;
 
