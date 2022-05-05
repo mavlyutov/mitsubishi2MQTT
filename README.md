@@ -18,15 +18,15 @@ Demo Circuit
 
 ### Screenshots
 
-Solarized dark             |  Solarized Ocean | Solarized Ocean
-:-------------------------:|:-------------------------:|:-------------------------:
+Web-interface
+Main Page | Control Page | Config Page
+:--:|:--:|:--:
 ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png)  |  ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) | ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
 
-Web-interface
-![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
-
 Wirenboard integration
-![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
+Main Page | Control Page | Config Page
+:--:|:--:|:--:
+![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png)  |  ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) | ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
 
 
 ***
