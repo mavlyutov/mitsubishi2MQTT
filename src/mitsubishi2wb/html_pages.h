@@ -31,7 +31,7 @@ const char html_page_mqtt[] PROGMEM =
                 "<br/>"
                 "<input id='mu' name='mu' "
                 "autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' "
-                "placeholder='DVES_USER' value='_MQTT_USER_'>"
+                "placeholder='User' value='_MQTT_USER_'>"
             "</p>"
             "<p><b>_TXT_MQTT_PASSWORD_</b>"
                 "<br/>"
