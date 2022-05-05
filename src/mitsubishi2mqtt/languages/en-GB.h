@@ -25,7 +25,6 @@ const char txt_reboot[] PROGMEM = "Reboot";
 const char txt_MQTT[] PROGMEM = "MQTT";
 const char txt_WIFI[] PROGMEM = "WIFI";
 const char txt_unit[] PROGMEM = "Unit";
-const char txt_others[] PROGMEM = "Others";
 const char txt_reset[] PROGMEM = "Reset configuration";
 const char txt_reset_confirm[] PROGMEM = "Do you really want to reset this unit?";
 
@@ -48,16 +47,14 @@ const char txt_f_quiet[] PROGMEM = "QUIET";
 const char txt_f_speed[] PROGMEM = "SPEED";
 const char txt_f_swing[] PROGMEM = "SWING";
 const char txt_f_pos[] PROGMEM = "POSITION";
-const char txt_f_celsius[] PROGMEM = "Celsius";
-const char txt_f_fh[] PROGMEM = "Fahrenheit";
 const char txt_f_allmodes[] PROGMEM = "All modes";
 const char txt_f_noheat[] PROGMEM = "All modes except heat";
 
 
 //Page Reboot, save & Resseting
-const char txt_m_reboot[] PROGMEM = "Rebooting... Refresh in";
+const char txt_m_reboot[] PROGMEM = "Rebooting... Refresh in ";
 const char txt_m_reset[] PROGMEM = "Resetting... Connect to SSID";
-const char txt_m_save[] PROGMEM = "Saving configuration and rebooting... Refresh in";
+const char txt_m_save[] PROGMEM = "Saving configuration and rebooting... Refresh in ";
 
 //Page MQTT
 const char txt_mqtt_title[] PROGMEM = "MQTT Parameters";
@@ -67,12 +64,6 @@ const char txt_mqtt_port[] PROGMEM = "Port (default 1883)";
 const char txt_mqtt_user[] PROGMEM = "User";
 const char txt_mqtt_password[] PROGMEM = "Password";
 const char txt_mqtt_topic[] PROGMEM = "Topic";
-
-//Page Others
-const char txt_others_title[] PROGMEM = "Others Parameters";
-const char txt_others_haauto[] PROGMEM = "HA Autodiscovery";
-const char txt_others_hatopic[] PROGMEM = "HA Autodiscovery topic";
-const char txt_others_debug[] PROGMEM = "Debug";
 
 //Page Status
 const char txt_status_title[] PROGMEM = "Status";
@@ -101,12 +92,10 @@ const char txt_ctrl_ctemp[] PROGMEM = "Current temperature";
 
 //Page Unit
 const char txt_unit_title[] PROGMEM = "Unit configuration";
-const char txt_unit_temp[] PROGMEM = "Temperature unit";
 const char txt_unit_maxtemp[] PROGMEM = "Maximum temperature";
 const char txt_unit_mintemp[] PROGMEM = "Minimum temperature";
 const char txt_unit_steptemp[] PROGMEM = "Temperature step";
 const char txt_unit_modes[] PROGMEM = "Mode support";
-const char txt_unit_password[] PROGMEM = "Web password";
 
 //Page Login
 const char txt_login_title[] PROGMEM = "Authentication";

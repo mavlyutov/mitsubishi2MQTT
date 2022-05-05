@@ -46,9 +46,6 @@ const char html_menu_root[] PROGMEM = R"====(
     </form>
 </div>
 <script>
-    if (_SHOW_LOGOUT_) {
-        document.getElementById("logout").style.display = "";
-    }
     if (_SHOW_CONTROL_) {
         document.getElementById("control").style.display = "";
     }
@@ -70,11 +67,6 @@ const char html_menu_setup[] PROGMEM = R"====(
 <p>
     <form action='/unit' method='get'>
         <button>_TXT_UNIT_</button>
-    </form>
-</p>
-<p>
-    <form action='/others' method='get'>
-        <button>_TXT_OTHERS_</button>
     </form>
 </p>
 <p>

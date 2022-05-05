@@ -20,21 +20,19 @@ const PROGMEM char* m2mqtt_version = "2022.01";
 
 //Define global variables for files
 #ifdef ESP32
-const PROGMEM char* wifi_conf = "/wifi.json";
-const PROGMEM char* mqtt_conf = "/mqtt.json";
-const PROGMEM char* advance_conf = "/advance.json";
-const PROGMEM char* console_file = "/console.log";
-const PROGMEM char* others_conf = "/others.json";
-// pinouts
-const PROGMEM  uint8_t blueLedPin = 2;            // The ESP32 has an internal blue LED at D2 (GPIO 02)
+  const PROGMEM char* wifi_conf = "/wifi.json";
+  const PROGMEM char* mqtt_conf = "/mqtt.json";
+  const PROGMEM char* advance_conf = "/advance.json";
+  const PROGMEM char* console_file = "/console.log";
+  // pinouts
+  const PROGMEM  uint8_t blueLedPin = 2;            // The ESP32 has an internal blue LED at D2 (GPIO 02)
 #else
-const PROGMEM char* wifi_conf = "wifi.json";
-const PROGMEM char* mqtt_conf = "mqtt.json";
-const PROGMEM char* unit_conf = "unit.json";
-const PROGMEM char* console_file = "console.log";
-const PROGMEM char* others_conf = "others.json";
-// pinouts
-const PROGMEM  uint8_t blueLedPin = LED_BUILTIN; // Onboard LED = digital pin 2 "D4" (blue LED on WEMOS D1-Mini)
+  const PROGMEM char* wifi_conf = "wifi.json";
+  const PROGMEM char* mqtt_conf = "mqtt.json";
+  const PROGMEM char* unit_conf = "unit.json";
+  const PROGMEM char* console_file = "console.log";
+  // pinouts
+  const PROGMEM  uint8_t blueLedPin = LED_BUILTIN; // Onboard LED = digital pin 2 "D4" (blue LED on WEMOS D1-Mini)
 #endif
 const PROGMEM  uint8_t redLedPin = 0;
 
@@ -44,55 +42,44 @@ const PROGMEM uint32_t WIFI_RETRY_INTERVAL_MS = 300000;
 unsigned long wifi_timeout;
 bool wifi_config_exists;
 String hostname = "";
-String ap_ssid;
-String ap_pwd;
+String ap_ssid = "";
+String ap_pwd = "";
 String ota_pwd;
 
 // Define global variables for MQTT
-String mqtt_fn;
 String mqtt_server;
 String mqtt_port;
 String mqtt_username;
 String mqtt_password;
-String mqtt_topic = "mitsubishi2mqtt";
 String mqtt_client_id;
-const PROGMEM char* mqtt_payload_available = "online";
-const PROGMEM char* mqtt_payload_unavailable = "offline";
 
-//Define global variables for Others settings
-bool others_haa;
-String others_haa_topic;
-
-// Define global variables for HA topics
-String ha_power_set_topic;
-String ha_mode_set_topic;
-String ha_temp_set_topic;
-String ha_remote_temp_set_topic;
-String ha_fan_set_topic;
-String ha_vane_set_topic;
-String ha_wideVane_set_topic;
-String ha_settings_topic;
-String ha_state_topic;
-String ha_debug_topic;
-String ha_debug_set_topic;
-String ha_config_topic;
-String ha_discovery_topic;
-String ha_custom_packet;
-String ha_availability_topic;
-String hvac_name;
-
-//login
-String login_username = "admin";
-String login_password;
-
-// debug mode, when true, will send all packets received from the heatpump to topic heatpump_debug_topic
-// this can also be set by sending "on" to heatpump_debug_set_topic
-bool _debugMode = false;
+// Define global variables for MQTT topics
+String main_topic;
+String power_topic;
+String power_set_topic;
+String power_topic_meta;
+String mode_topic;
+String mode_set_topic;
+String mode_topic_meta;
+String fan_topic;
+String fan_set_topic;
+String fan_topic_meta;
+String vane_topic;
+String vane_set_topic;
+String vane_topic_meta;
+String widevane_topic;
+String widevane_set_topic;
+String widevane_topic_meta;
+String temp_topic;
+String temp_set_topic;
+String temp_topic_meta;
+String room_temp_topic;
+String room_temp_topic_meta;
 
 // Customization
-uint8_t min_temp                    = 16; // Minimum temperature, check value from heatpump remote control
-uint8_t max_temp                    = 31; // Maximum temperature, check value from heatpump remote control
-String temp_step                   = "1"; // Temperature setting step, check value from heatpump remote control
+uint8_t min_temp = 16; // Minimum temperature, check value from heatpump remote control
+uint8_t max_temp = 31; // Maximum temperature, check value from heatpump remote control
+String temp_step = "1"; // Temperature setting step, check value from heatpump remote control
 
 // sketch settings
 const PROGMEM uint32_t SEND_ROOM_TEMP_INTERVAL_MS = 45000; // 45 seconds (anything less may cause bouncing)
@@ -100,7 +87,5 @@ const PROGMEM uint32_t MQTT_RETRY_INTERVAL_MS = 5000; // 5 seconds
 const PROGMEM uint32_t HP_RETRY_INTERVAL_MS = 1000; // 1 seconds
 const PROGMEM uint32_t HP_MAX_RETRIES = 5;
 
-// temp settings
-bool useFahrenheit = false;
-// support heat mode settings, some model do not support heat mode
+// support heat mode settings, some model does not support heat mode
 bool supportHeatMode = true;
