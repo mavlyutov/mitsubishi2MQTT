@@ -1,7 +1,7 @@
 # mitsubishi2wb
 Use MQTT and ESP8266/ESP32 module to control Mitsubishi HVAC unit.
-<br>It use SwiCago librairies: https://github.com/SwiCago/HeatPump
-<br>And based on gysmo38 repo: https://github.com/gysmo38/mitsubishi2MQTT
+<br>based on SwiCago HeatPump library: https://github.com/SwiCago/HeatPump
+<br>and inpired by gysmo38 HA-integration: https://github.com/gysmo38/mitsubishi2MQTT
 
 ### Features
  - Initial config:  WIFI AP mode and web portal
@@ -9,10 +9,10 @@ Use MQTT and ESP8266/ESP32 module to control Mitsubishi HVAC unit.
  - Wirenboard-compatible MQTT topics
 
 ### Hardware
- - Mitsubishi AC unit (tested on MSZ-SF15VA, MSZ-SF20VA, MSZ-SF42VE, see full supported models list on [SwiCago wiki](https://github.com/SwiCago/HeatPump/wiki/Supported-models))
+ - Mitsubishi AC unit (tested on MSZ-SF15VA, MSZ-SF20VA, MSZ-SF42VE, see full supported models list at [SwiCago wiki](https://github.com/SwiCago/HeatPump/wiki/Supported-models))
  - WeMos D1 Mini or any other ESP8266 board capable to handle 5V power source
- - Mitsubishi CN105 Cable (or analogue, i.e. https://nl.aliexpress.com/item/1005003232354177.html select 5P option)
- - Solder 5V (brown) and ground (orange) pinouts to your D1 Mini. [hires](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wemosd1-hires.jpg)
+ - Mitsubishi CN105 Cable (or analogue, i.e. https://nl.aliexpress.com/item/1005003232354177.html)
+ - Solder 5V (brown), ground (orange), RX (blue) and TX (red) pinouts to your D1 Mini. [hires](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wemosd1-hires.jpg)
 
 ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder1.jpg)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder2.jpg)
 
