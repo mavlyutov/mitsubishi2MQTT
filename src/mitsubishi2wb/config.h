@@ -38,12 +38,12 @@ String mqtt_client_id;
 
 // Define global variables for MQTT topics
 String main_topic;
-String power_topic;
-String mode_topic;
-String fan_topic;
-String vane_topic;
-String widevane_topic;
-String temp_topic;
+String power_topic, power_set_topic;
+String mode_topic, mode_set_topic;
+String fan_topic, fan_set_topic;
+String vane_topic, vane_set_topic;
+String widevane_topic, widevane_set_topic;
+String temp_topic, temp_set_topic;
 String room_temp_topic;
 
 // Customization

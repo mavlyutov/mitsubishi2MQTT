@@ -120,14 +120,14 @@ void setup() {
       String deviceName = hostname;
       deviceName.toLowerCase();
 
-      main_topic              = "/devices/" + deviceName + "/meta";
-      power_topic             = "/devices/" + deviceName + "/controls/power";
-      mode_topic              = "/devices/" + deviceName + "/controls/mode";
-      fan_topic               = "/devices/" + deviceName + "/controls/fan";
-      vane_topic              = "/devices/" + deviceName + "/controls/vane";
-      widevane_topic          = "/devices/" + deviceName + "/controls/widevane";
-      temp_topic              = "/devices/" + deviceName + "/controls/temperature";
-      room_temp_topic         = "/devices/" + deviceName + "/controls/room_temperature";
+      main_topic      = "/devices/" + deviceName + "/meta";
+      power_topic     = "/devices/" + deviceName + "/controls/power"; power_set_topic = power_topic + "\on";
+      mode_topic      = "/devices/" + deviceName + "/controls/mode"; mode_set_topic = mode_topic + "\on";
+      fan_topic       = "/devices/" + deviceName + "/controls/fan"; fan_set_topic = fan_topic + "\on";
+      vane_topic      = "/devices/" + deviceName + "/controls/vane"; vane_set_topic = vane_topic + "\on";
+      widevane_topic  = "/devices/" + deviceName + "/controls/widevane"; widevane_set_topic = widevane_topic + "\on";
+      temp_topic      = "/devices/" + deviceName + "/controls/temperature"; temp_set_topic = temp_topic + "\on";
+      room_temp_topic = "/devices/" + deviceName + "/controls/room_temperature";
 
       // startup mqtt connection
       initMqtt();
@@ -1138,8 +1138,6 @@ void sendWbMeta() {
   max_topic = meta_topic + "/max";
   mqtt_client.publish(max_topic.c_str(), mode_meta["max"], true);
 
-  mqtt_client.publish(mode_topic_meta.c_str(), mqttOutput.c_str(), true);
-
   //fan
   capacity = JSON_OBJECT_SIZE(5) + 128;
   DynamicJsonDocument fan_meta(capacity);
@@ -1152,7 +1150,14 @@ void sendWbMeta() {
   title["ru"] = "fan";
   mqttOutput = "";
   serializeJson(fan_meta, mqttOutput);
-  mqtt_client.publish(fan_topic_meta.c_str(), mqttOutput.c_str(), true);
+  meta_topic = fan_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), fan_meta["type"], true);
+  min_topic = meta_topic + "/min";
+  mqtt_client.publish(min_topic.c_str(), fan_meta["min"], true);
+  max_topic = meta_topic + "/max";
+  mqtt_client.publish(max_topic.c_str(), fan_meta["max"], true);
 
   //vane
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1166,7 +1171,14 @@ void sendWbMeta() {
   title["ru"] = "vane";
   mqttOutput = "";
   serializeJson(vane_meta, mqttOutput);
-  mqtt_client.publish(vane_topic_meta.c_str(), mqttOutput.c_str(), true);
+  meta_topic = vane_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), vane_meta["type"], true);
+  min_topic = meta_topic + "/min";
+  mqtt_client.publish(min_topic.c_str(), vane_meta["min"], true);
+  max_topic = meta_topic + "/max";
+  mqtt_client.publish(max_topic.c_str(), vane_meta["max"], true);
 
   //widevane
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1180,7 +1192,14 @@ void sendWbMeta() {
   title["ru"] = "widevane";
   mqttOutput = "";
   serializeJson(widevane_meta, mqttOutput);
-  mqtt_client.publish(widevane_topic_meta.c_str(), mqttOutput.c_str(), true);
+  meta_topic = widevane_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), widevane_meta["type"], true);
+  min_topic = meta_topic + "/min";
+  mqtt_client.publish(min_topic.c_str(), widevane_meta["min"], true);
+  max_topic = meta_topic + "/max";
+  mqtt_client.publish(max_topic.c_str(), widevane_meta["max"], true);
 
   //temperature
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1194,7 +1213,14 @@ void sendWbMeta() {
   title["ru"] = "temperature";
   mqttOutput = "";
   serializeJson(temp_meta, mqttOutput);
-  mqtt_client.publish(temp_topic_meta.c_str(), mqttOutput.c_str(), true);
+  meta_topic = temp_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), temp_meta["type"], true);
+  min_topic = meta_topic + "/min";
+  mqtt_client.publish(min_topic.c_str(), temp_meta["min"], true);
+  max_topic = meta_topic + "/max";
+  mqtt_client.publish(max_topic.c_str(), temp_meta["max"], true);
 
   //room_temperature
   capacity = JSON_OBJECT_SIZE(3) + 128;
@@ -1206,12 +1232,11 @@ void sendWbMeta() {
   title["ru"] = "room_temperature";
   mqttOutput = "";
   serializeJson(room_temp_meta, mqttOutput);
-  mqtt_client.publish(room_temp_topic_meta.c_str(), mqttOutput.c_str(), true);
+  meta_topic = room_temp_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), room_temp_meta["type"], true);
 }
-
-
-// min/max под метой
-// type под метой
 
 void mqttConnect() {
   // Loop until we're reconnected
