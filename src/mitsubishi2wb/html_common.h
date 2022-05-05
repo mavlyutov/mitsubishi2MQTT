@@ -5,7 +5,7 @@ const char html_common_header[] PROGMEM = R"====(<!DOCTYPE html>
 <head>
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-    <title>Mitsubishi2MQTT - _UNIT_NAME_</title>
+    <title>mitsubishi2wb - _UNIT_NAME_</title>
     <style>
         div,fieldset,input,select {
             padding: 5px;
@@ -155,7 +155,7 @@ const char html_common_header[] PROGMEM = R"====(<!DOCTYPE html>
 <body>
     <div class="main">
         <div style='text-align:center;'>
-            <noscript>To use Mitsubishi2MQTT, you need to activate Javascript<br/></noscript>
+            <noscript>To use mitsubishi2wb, you need to activate Javascript<br/></noscript>
             <h3>_UNIT_NAME_</h3>
         </div>
 )====";
@@ -163,7 +163,7 @@ const char html_common_header[] PROGMEM = R"====(<!DOCTYPE html>
 const char html_common_footer[] PROGMEM = R"====(
         <br/>
         <div style='text-align:right;font-size:10px;color: grey;'>
-            <hr/>Mitsubishi2MQTT _VERSION_
+            <hr/>mitsubishi2wb _VERSION_
         </div>
     </div>
 </body>

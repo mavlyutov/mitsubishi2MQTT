@@ -68,7 +68,7 @@ int uploaderror = 0;
 void setup() {
   // Start serial for debug before HVAC connect to serial
   Serial.begin(115200);
-  // Serial.println(F("Starting Mitsubishi2MQTT"));
+  // Serial.println(F("Starting mitsubishi2wb"));
   // Mount SPIFFS filesystem
   if (SPIFFS.begin()) {
     // Serial.println(F("Mounted file system"));
@@ -98,7 +98,7 @@ void setup() {
     if (SPIFFS.exists(console_file)) {
       SPIFFS.remove(console_file);
     }
-    //write_log("Starting Mitsubishi2MQTT");
+    //write_log("Starting mitsubishi2wb");
     //Web interface
     server.on("/", handleRoot);
     server.on("/control", handleControl);
@@ -121,12 +121,12 @@ void setup() {
       deviceName.toLowerCase();
 
       main_topic      = "/devices/" + deviceName + "/meta";
-      power_topic     = "/devices/" + deviceName + "/controls/power"; power_set_topic = power_topic + "\on";
-      mode_topic      = "/devices/" + deviceName + "/controls/mode"; mode_set_topic = mode_topic + "\on";
-      fan_topic       = "/devices/" + deviceName + "/controls/fan"; fan_set_topic = fan_topic + "\on";
-      vane_topic      = "/devices/" + deviceName + "/controls/vane"; vane_set_topic = vane_topic + "\on";
-      widevane_topic  = "/devices/" + deviceName + "/controls/widevane"; widevane_set_topic = widevane_topic + "\on";
-      temp_topic      = "/devices/" + deviceName + "/controls/temperature"; temp_set_topic = temp_topic + "\on";
+      power_topic     = "/devices/" + deviceName + "/controls/power"; power_set_topic = power_topic + "/on";
+      mode_topic      = "/devices/" + deviceName + "/controls/mode"; mode_set_topic = mode_topic + "/on";
+      fan_topic       = "/devices/" + deviceName + "/controls/fan"; fan_set_topic = fan_topic + "/on";
+      vane_topic      = "/devices/" + deviceName + "/controls/vane"; vane_set_topic = vane_topic + "/on";
+      widevane_topic  = "/devices/" + deviceName + "/controls/widevane"; widevane_set_topic = widevane_topic + "/on";
+      temp_topic      = "/devices/" + deviceName + "/controls/temperature"; temp_set_topic = temp_topic + "/on";
       room_temp_topic = "/devices/" + deviceName + "/controls/room_temperature";
 
       // startup mqtt connection
@@ -967,39 +967,39 @@ void hpSettingsChanged() {
   // send room temp, operating info and all information
   readHeatPumpSettings();
 
-  if (rootInfo["power"] == "ON") { mqtt_client.publish(power_topic.c_str(), "1", false); }
-  else if (rootInfo["power"] == "OFF") { mqtt_client.publish(power_topic.c_str(), "0", false); }
+  if (rootInfo["power"] == "ON") { mqtt_client.publish(power_topic.c_str(), "1", true); }
+  else if (rootInfo["power"] == "OFF") { mqtt_client.publish(power_topic.c_str(), "0", true); }
 
-  mqtt_client.publish(temp_topic.c_str(), String(rootInfo["temperature"]).c_str(), false);
+  mqtt_client.publish(temp_topic.c_str(), String(rootInfo["temperature"]).c_str(), true);
 
-  if (rootInfo["fan"] == "AUTO") { mqtt_client.publish(fan_topic.c_str(), "0", false); }
-  else if (rootInfo["fan"] == "QUIET") { mqtt_client.publish(fan_topic.c_str(), "1", false); }
-  else if (rootInfo["fan"] == "1") { mqtt_client.publish(fan_topic.c_str(), "2", false); }
-  else if (rootInfo["fan"] == "2") { mqtt_client.publish(fan_topic.c_str(), "3", false); }
-  else if (rootInfo["fan"] == "3") { mqtt_client.publish(fan_topic.c_str(), "4", false); }
-  else if (rootInfo["fan"] == "4") { mqtt_client.publish(fan_topic.c_str(), "5", false); }
+  if (rootInfo["fan"] == "AUTO") { mqtt_client.publish(fan_topic.c_str(), "0", true); }
+  else if (rootInfo["fan"] == "QUIET") { mqtt_client.publish(fan_topic.c_str(), "1", true); }
+  else if (rootInfo["fan"] == "1") { mqtt_client.publish(fan_topic.c_str(), "2", true); }
+  else if (rootInfo["fan"] == "2") { mqtt_client.publish(fan_topic.c_str(), "3", true); }
+  else if (rootInfo["fan"] == "3") { mqtt_client.publish(fan_topic.c_str(), "4", true); }
+  else if (rootInfo["fan"] == "4") { mqtt_client.publish(fan_topic.c_str(), "5", true); }
 
-  if (rootInfo["vane"] == "AUTO") { mqtt_client.publish(vane_topic.c_str(), "0", false); }
-  else if (rootInfo["vane"] == "SWING") { mqtt_client.publish(vane_topic.c_str(), "1", false); }
-  else if (rootInfo["vane"] == "1") { mqtt_client.publish(vane_topic.c_str(), "2", false); }
-  else if (rootInfo["vane"] == "2") { mqtt_client.publish(vane_topic.c_str(), "3", false); }
-  else if (rootInfo["vane"] == "3") { mqtt_client.publish(vane_topic.c_str(), "4", false); }
-  else if (rootInfo["vane"] == "4") { mqtt_client.publish(vane_topic.c_str(), "5", false); }
-  else if (rootInfo["vane"] == "5") { mqtt_client.publish(vane_topic.c_str(), "6", false); }
+  if (rootInfo["vane"] == "AUTO") { mqtt_client.publish(vane_topic.c_str(), "0", true); }
+  else if (rootInfo["vane"] == "SWING") { mqtt_client.publish(vane_topic.c_str(), "1", true); }
+  else if (rootInfo["vane"] == "1") { mqtt_client.publish(vane_topic.c_str(), "2", true); }
+  else if (rootInfo["vane"] == "2") { mqtt_client.publish(vane_topic.c_str(), "3", true); }
+  else if (rootInfo["vane"] == "3") { mqtt_client.publish(vane_topic.c_str(), "4", true); }
+  else if (rootInfo["vane"] == "4") { mqtt_client.publish(vane_topic.c_str(), "5", true); }
+  else if (rootInfo["vane"] == "5") { mqtt_client.publish(vane_topic.c_str(), "6", true); }
 
-  if (rootInfo["wideVane"] == "SWING") { mqtt_client.publish(widevane_topic.c_str(), "0", false); }
-  else if (rootInfo["wideVane"] == "<<") { mqtt_client.publish(widevane_topic.c_str(), "1", false); }
-  else if (rootInfo["wideVane"] == "<") { mqtt_client.publish(widevane_topic.c_str(), "2", false); }
-  else if (rootInfo["wideVane"] == "|") { mqtt_client.publish(widevane_topic.c_str(), "3", false); }
-  else if (rootInfo["wideVane"] == ">") { mqtt_client.publish(widevane_topic.c_str(), "4", false); }
-  else if (rootInfo["wideVane"] == ">>") { mqtt_client.publish(widevane_topic.c_str(), "5", false); }
-  else if (rootInfo["wideVane"] == "<>") { mqtt_client.publish(widevane_topic.c_str(), "6", false); }
+  if (rootInfo["wideVane"] == "SWING") { mqtt_client.publish(widevane_topic.c_str(), "0", true); }
+  else if (rootInfo["wideVane"] == "<<") { mqtt_client.publish(widevane_topic.c_str(), "1", true); }
+  else if (rootInfo["wideVane"] == "<") { mqtt_client.publish(widevane_topic.c_str(), "2", true); }
+  else if (rootInfo["wideVane"] == "|") { mqtt_client.publish(widevane_topic.c_str(), "3", true); }
+  else if (rootInfo["wideVane"] == ">") { mqtt_client.publish(widevane_topic.c_str(), "4", true); }
+  else if (rootInfo["wideVane"] == ">>") { mqtt_client.publish(widevane_topic.c_str(), "5", true); }
+  else if (rootInfo["wideVane"] == "<>") { mqtt_client.publish(widevane_topic.c_str(), "6", true); }
 
-  if (rootInfo["mode"] == "QUIET") { mqtt_client.publish(mode_topic.c_str(), "0", false); }
-  else if (rootInfo["mode"] == "DRY") { mqtt_client.publish(mode_topic.c_str(), "1", false); }
-  else if (rootInfo["mode"] == "COOL") { mqtt_client.publish(mode_topic.c_str(), "2", false); }
-  else if (rootInfo["mode"] == "HEAT") { mqtt_client.publish(mode_topic.c_str(), "3", false); }
-  else if (rootInfo["mode"] == "FAN") { mqtt_client.publish(mode_topic.c_str(), "4", false); }
+  if (rootInfo["mode"] == "QUIET") { mqtt_client.publish(mode_topic.c_str(), "0", true); }
+  else if (rootInfo["mode"] == "DRY") { mqtt_client.publish(mode_topic.c_str(), "1", true); }
+  else if (rootInfo["mode"] == "COOL") { mqtt_client.publish(mode_topic.c_str(), "2", true); }
+  else if (rootInfo["mode"] == "HEAT") { mqtt_client.publish(mode_topic.c_str(), "3", true); }
+  else if (rootInfo["mode"] == "FAN") { mqtt_client.publish(mode_topic.c_str(), "4", true); }
 
   hpStatusChanged(hp.getStatus());
 }
@@ -1009,7 +1009,7 @@ void hpStatusChanged(heatpumpStatus currentStatus) {
   if (millis() > (lastTempSend + SEND_ROOM_TEMP_INTERVAL_MS)) {
     rootInfo["roomTemperature"]  = currentStatus.roomTemperature;
 
-    mqtt_client.publish(room_temp_topic.c_str(), String(rootInfo["roomTemperature"]).c_str(), false);
+    mqtt_client.publish(room_temp_topic.c_str(), String(rootInfo["roomTemperature"]).c_str(), true);
     lastTempSend = millis(); //restart counter for waiting enought time for the unit to update before sending a state packet
   }
 }
@@ -1134,9 +1134,9 @@ void sendWbMeta() {
   type_topic = meta_topic + "/type";
   mqtt_client.publish(type_topic.c_str(), mode_meta["type"], true);
   min_topic = meta_topic + "/min";
-  mqtt_client.publish(min_topic.c_str(), mode_meta["min"], true);
+  mqtt_client.publish(min_topic.c_str(), String(mode_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
-  mqtt_client.publish(max_topic.c_str(), mode_meta["max"], true);
+  mqtt_client.publish(max_topic.c_str(), String(mode_meta["max"]).c_str(), true);
 
   //fan
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1155,9 +1155,9 @@ void sendWbMeta() {
   type_topic = meta_topic + "/type";
   mqtt_client.publish(type_topic.c_str(), fan_meta["type"], true);
   min_topic = meta_topic + "/min";
-  mqtt_client.publish(min_topic.c_str(), fan_meta["min"], true);
+  mqtt_client.publish(min_topic.c_str(), String(fan_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
-  mqtt_client.publish(max_topic.c_str(), fan_meta["max"], true);
+  mqtt_client.publish(max_topic.c_str(), String(fan_meta["max"]).c_str(), true);
 
   //vane
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1176,9 +1176,9 @@ void sendWbMeta() {
   type_topic = meta_topic + "/type";
   mqtt_client.publish(type_topic.c_str(), vane_meta["type"], true);
   min_topic = meta_topic + "/min";
-  mqtt_client.publish(min_topic.c_str(), vane_meta["min"], true);
+  mqtt_client.publish(min_topic.c_str(), String(vane_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
-  mqtt_client.publish(max_topic.c_str(), vane_meta["max"], true);
+  mqtt_client.publish(max_topic.c_str(), String(vane_meta["max"]).c_str(), true);
 
   //widevane
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1197,9 +1197,9 @@ void sendWbMeta() {
   type_topic = meta_topic + "/type";
   mqtt_client.publish(type_topic.c_str(), widevane_meta["type"], true);
   min_topic = meta_topic + "/min";
-  mqtt_client.publish(min_topic.c_str(), widevane_meta["min"], true);
+  mqtt_client.publish(min_topic.c_str(), String(widevane_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
-  mqtt_client.publish(max_topic.c_str(), widevane_meta["max"], true);
+  mqtt_client.publish(max_topic.c_str(), String(widevane_meta["max"]).c_str(), true);
 
   //temperature
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1218,9 +1218,9 @@ void sendWbMeta() {
   type_topic = meta_topic + "/type";
   mqtt_client.publish(type_topic.c_str(), temp_meta["type"], true);
   min_topic = meta_topic + "/min";
-  mqtt_client.publish(min_topic.c_str(), temp_meta["min"], true);
+  mqtt_client.publish(min_topic.c_str(), String(temp_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
-  mqtt_client.publish(max_topic.c_str(), temp_meta["max"], true);
+  mqtt_client.publish(max_topic.c_str(), String(temp_meta["max"]).c_str(), true);
 
   //room_temperature
   capacity = JSON_OBJECT_SIZE(3) + 128;
