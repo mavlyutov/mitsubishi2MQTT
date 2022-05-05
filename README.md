@@ -22,9 +22,9 @@ Main Page | Control Page | Config Page
 ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/main_page.png)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/control_page.png) | ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/config_page.png)
 
 Wirenboard integration
-Main Page | Control Page | Config Page
-:--:|:--:|:--:
-![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/main_page.png)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/control_page.png) | ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/config_page.png)
+WB-device | WB mqtt topics
+:--:|:--:
+![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wb_main_page.png)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wb_topics.png)
 
 
 ### Quick start:
