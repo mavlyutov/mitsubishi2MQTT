@@ -12,11 +12,9 @@ Use MQTT and ESP8266/ESP32 module to control Mitsubishi HVAC unit.
  - Mitsubishi AC unit (tested on MSZ-SF15VA, MSZ-SF20VA, MSZ-SF42VE, see full supported models list on [SwiCago wiki](https://github.com/SwiCago/HeatPump/wiki/Supported-models))
  - WeMos D1 Mini or any other ESP8266 board capable to handle 5V power source
  - Mitsubishi CN105 Cable (or analogue, i.e. https://nl.aliexpress.com/item/1005003232354177.html select 5P option)
- - Solder 5V (brown) and ground (orange) pinouts to your D1 Mini.
+ - Solder 5V (brown) and ground (orange) pinouts to your D1 Mini. [hires](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wemosd1-hires.jpg)
 
-Main Page | Control Page | Config Page
-:--:|:--:|:--:
-![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder1.jpg)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder2.jpg)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wemosd1-hires.jpg)
+![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder1.jpg)  |  ![](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder2.jpg)
 
 ### Screenshots
 
