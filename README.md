@@ -1,24 +1,29 @@
-# mitsubishi2MQTT
+# mitsubishi2wb
 Use MQTT and ESP8266/ESP32 module to control Mitsubishi HVAC unit.
 It use SwiCago librairies: https://github.com/SwiCago/HeatPump
+And based on gysmo38 repo: https://github.com/gysmo38/mitsubishi2MQTT
 
 ***
 Features:
  - Initial config:  WIFI AP mode and web portal
  - Web interface for configuration, status and control, firmware upgrade
- - Homeassistant autodiscovery and control with MQTT
+ - Wirenboard-compatible MQTT topics
+
+***
+Hardware:
+ - Mitsubishi AC unit (tested on ...)
+ - WeMos D1 mini
+ - CN105 Cable
 
 ***
 Screenshots:
 
-Main Page
-![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png)
+Web-interface
+![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
 
-Control page
-![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png)
+Wirenboard integration
+![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
 
-Config page
-![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
 
 ***
 How to use:
@@ -29,18 +34,3 @@ How to use:
  - Step 5: find the device IP with last 4 character MAC address in your router
  - Step 6: (optional): Set MQTT information for use with Home Assistant
  - Step 7: (optional): Set Login password to prevent unwanted access in SETUP->ADVANCE->Login Password
-
-***
-For nodered fans MQTT topic use cases
-- topic/power/set OFF
-- topic/mode/set AUTO HEAT COOL DRY FAN_ONLY OFF ON
-- topic/temp/set 16-31
-- topic/remote_temp/set also called "room_temp", the implementation defined in "HeatPump" seems not work in some models
-- topic/fan/set 1-4 AUTO QUIET
-- topic/vane/set 1-5 SWING AUTO
-- topic/wideVane/set << < | > >>
-- topic/settings
-- topic/state
-- topic/debug
-- topic/debug/set on off
-- topic/custom/send as example "fc 42 01 30 10 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7b " see https://github.com/SwiCago/HeatPump/blob/master/src/HeatPump.h

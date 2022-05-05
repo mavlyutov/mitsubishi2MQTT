@@ -1226,8 +1226,8 @@ void sendWbMeta() {
 }
 
 
-min/max под метой
-type под метой
+// min/max под метой
+// type под метой
 
 void mqttConnect() {
   // Loop until we're reconnected
