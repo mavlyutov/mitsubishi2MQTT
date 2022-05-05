@@ -45,7 +45,7 @@
 
 // Languages
 #ifndef MY_LANGUAGE
-  #include "languages/en-GB.h" // default language English
+  #include "languages/en-GB.h" // default language is English
 #else
   #define QUOTEME(x) QUOTEME_1(x)
   #define QUOTEME_1(x) #x
@@ -137,25 +137,12 @@ void setup() {
 
       main_topic              = "/devices/" + deviceName + "/meta";
       power_topic             = "/devices/" + deviceName + "/controls/power";
-      power_set_topic         = "/devices/" + deviceName + "/controls/power/on";
-      power_topic_meta        = "/devices/" + deviceName + "/controls/power/meta";
       mode_topic              = "/devices/" + deviceName + "/controls/mode";
-      mode_set_topic          = "/devices/" + deviceName + "/controls/mode/on";
-      mode_topic_meta         = "/devices/" + deviceName + "/controls/mode/meta";
       fan_topic               = "/devices/" + deviceName + "/controls/fan";
-      fan_set_topic           = "/devices/" + deviceName + "/controls/fan/on";
-      fan_topic_meta          = "/devices/" + deviceName + "/controls/fan/meta";
       vane_topic              = "/devices/" + deviceName + "/controls/vane";
-      vane_set_topic          = "/devices/" + deviceName + "/controls/vane/on";
-      vane_topic_meta         = "/devices/" + deviceName + "/controls/vane/meta";
       widevane_topic          = "/devices/" + deviceName + "/controls/widevane";
-      widevane_set_topic      = "/devices/" + deviceName + "/controls/widevane/on";
-      widevane_topic_meta     = "/devices/" + deviceName + "/controls/widevane/meta";
       temp_topic              = "/devices/" + deviceName + "/controls/temperature";
-      temp_set_topic          = "/devices/" + deviceName + "/controls/temperature/on";
-      temp_topic_meta         = "/devices/" + deviceName + "/controls/temperature/meta";
       room_temp_topic         = "/devices/" + deviceName + "/controls/room_temperature";
-      room_temp_topic_meta    = "/devices/" + deviceName + "/controls/room_temperature/meta";
 
       // startup mqtt connection
       initMqtt();
@@ -1116,8 +1103,8 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
 void sendWbMeta() {
   size_t capacity;
-  String mqttOutput;
   JsonObject title;
+  String mqttOutput, type_topic, meta_topic, min_topic, max_topic;
 
   //main
   capacity = JSON_OBJECT_SIZE(2) + 128;
@@ -1140,7 +1127,10 @@ void sendWbMeta() {
   title["ru"] = "power";
   mqttOutput = "";
   serializeJson(power_meta, mqttOutput);
-  mqtt_client.publish(power_topic_meta.c_str(), mqttOutput.c_str(), true);
+  meta_topic = power_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), power_meta["type"], true);
 
   //mode
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1154,6 +1144,15 @@ void sendWbMeta() {
   title["ru"] = "mode";
   mqttOutput = "";
   serializeJson(mode_meta, mqttOutput);
+  meta_topic = mode_topic + "/meta";
+  mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
+  type_topic = meta_topic + "/type";
+  mqtt_client.publish(type_topic.c_str(), mode_meta["type"], true);
+  min_topic = meta_topic + "/min";
+  mqtt_client.publish(min_topic.c_str(), mode_meta["min"], true);
+  max_topic = meta_topic + "/max";
+  mqtt_client.publish(max_topic.c_str(), mode_meta["max"], true);
+
   mqtt_client.publish(mode_topic_meta.c_str(), mqttOutput.c_str(), true);
 
   //fan

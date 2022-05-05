@@ -1,4 +1,4 @@
-# mitsubishi2mqtt - Mitsubishi Heat Pump to MQTT control for Home Assistant.
+# mitsubishi2wb - Mitsubishi Heat Pump to MQTT control for Wirenboard.
 
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999

@@ -56,25 +56,12 @@ String mqtt_client_id;
 // Define global variables for MQTT topics
 String main_topic;
 String power_topic;
-String power_set_topic;
-String power_topic_meta;
 String mode_topic;
-String mode_set_topic;
-String mode_topic_meta;
 String fan_topic;
-String fan_set_topic;
-String fan_topic_meta;
 String vane_topic;
-String vane_set_topic;
-String vane_topic_meta;
 String widevane_topic;
-String widevane_set_topic;
-String widevane_topic_meta;
 String temp_topic;
-String temp_set_topic;
-String temp_topic_meta;
 String room_temp_topic;
-String room_temp_topic_meta;
 
 // Customization
 uint8_t min_temp = 16; // Minimum temperature, check value from heatpump remote control
