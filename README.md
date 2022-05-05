@@ -1,22 +1,26 @@
 # mitsubishi2wb
 Use MQTT and ESP8266/ESP32 module to control Mitsubishi HVAC unit.
-It use SwiCago librairies: https://github.com/SwiCago/HeatPump
-And based on gysmo38 repo: https://github.com/gysmo38/mitsubishi2MQTT
+<br>It use SwiCago librairies: https://github.com/SwiCago/HeatPump
+<br>And based on gysmo38 repo: https://github.com/gysmo38/mitsubishi2MQTT
 
-***
-Features:
+### Features
  - Initial config:  WIFI AP mode and web portal
  - Web interface for configuration, status and control, firmware upgrade
  - Wirenboard-compatible MQTT topics
 
-***
-Hardware:
+### Hardware
  - Mitsubishi AC unit (tested on ...)
  - WeMos D1 mini
- - CN105 Cable
+ - CN105 Cable (https://nl.aliexpress.com/item/1005003232354177.html select 5P option)
 
-***
-Screenshots:
+Demo Circuit
+<br><img src="https://github.com/SwiCago/HeatPump/blob/master/CN105_ESP8266.png"/>
+
+### Screenshots
+
+Solarized dark             |  Solarized Ocean | Solarized Ocean
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png)  |  ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) | ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
 
 Web-interface
 ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/main_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/control_page.png) ![](https://github.com/gysmo38/mitsubishi2MQTT/blob/master/images/config_page.png)
