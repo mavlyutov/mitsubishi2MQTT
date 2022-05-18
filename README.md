@@ -11,8 +11,8 @@ Use MQTT and ESP8266/ESP32 module to control Mitsubishi HVAC unit.
 ### Hardware
  - Mitsubishi AC unit (tested on MSZ-SF15VA, MSZ-SF20VA, MSZ-SF42VE, see full supported models list at [SwiCago wiki](https://github.com/SwiCago/HeatPump/wiki/Supported-models))
  - WeMos D1 Mini or any other ESP32/ESP8266 board capable to handle 5V power source
- - Mitsubishi CN105 Cable (or analogue, i.e. https://nl.aliexpress.com/item/1005003232354177.html). CN105 pins are: [12V, GND, 5V, Tx, Rx]
- - Solder 5V, GND, RX and TX pinouts to your D1 Mini. [pic1](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder1.jpg), [pic2](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder2.jpg), [HiRes](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wemosd1-hires.jpg)
+ - Mitsubishi CN105 Cable (or analogue, i.e. https://nl.aliexpress.com/item/1005003232354177.html). CN105 pins order is: [12V, GND, 5V, Tx, Rx]
+ - Solder GND, 5V, Tx and Rx pinouts to your D1 Mini. Note that Rx of AC unit should be connected to Tx of the board. [pic1](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder1.jpg), [pic2](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/Wemos_D1_Solder2.jpg), [HiRes](https://github.com/mavlyutov/mitsubishi2wb/blob/master/images/wemosd1-hires.jpg)
  - Full installation guide can be found here: https://chrdavis.github.io/hacking-a-mitsubishi-heat-pump-Part-1/
 
 ### Screenshots
