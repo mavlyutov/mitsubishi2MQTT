@@ -995,7 +995,7 @@ void hpSettingsChanged() {
   else if (rootInfo["wideVane"] == ">>") { mqtt_client.publish(widevane_topic.c_str(), "5", true); }
   else if (rootInfo["wideVane"] == "<>") { mqtt_client.publish(widevane_topic.c_str(), "6", true); }
 
-  if (rootInfo["mode"] == "QUIET") { mqtt_client.publish(mode_topic.c_str(), "0", true); }
+  if (rootInfo["mode"] == "AUTO") { mqtt_client.publish(mode_topic.c_str(), "0", true); }
   else if (rootInfo["mode"] == "DRY") { mqtt_client.publish(mode_topic.c_str(), "1", true); }
   else if (rootInfo["mode"] == "COOL") { mqtt_client.publish(mode_topic.c_str(), "2", true); }
   else if (rootInfo["mode"] == "HEAT") { mqtt_client.publish(mode_topic.c_str(), "3", true); }
