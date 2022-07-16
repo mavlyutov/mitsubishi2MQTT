@@ -1089,18 +1089,22 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 void sendWbMeta() {
   size_t capacity;
   JsonObject title;
-  String mqttOutput, type_topic, meta_topic, min_topic, max_topic;
+  String mqttOutput, driver_topic, name_topic, type_topic, meta_topic, min_topic, max_topic;
 
   //main
   capacity = JSON_OBJECT_SIZE(2) + 128;
   DynamicJsonDocument main_meta(capacity);
-  main_meta["driver"] = "esp32";
+  main_meta["driver"] = "mitsubishi2wb";
   title = main_meta.createNestedObject("title");
   title["en"] = hostname;
   title["ru"] = hostname;
   mqttOutput = "";
   serializeJson(main_meta, mqttOutput);
   mqtt_client.publish(main_topic.c_str(), mqttOutput.c_str(), true);
+  driver_topic = main_topic + "/driver";
+  mqtt_client.publish(driver_topic.c_str(), main_meta["driver"], true);
+  name_topic = main_topic + "/name";
+  mqtt_client.publish(name_topic.c_str(), main_meta["title"]["en"], true);
 
   //power
   capacity = JSON_OBJECT_SIZE(3) + 128;
