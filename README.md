@@ -42,7 +42,7 @@ Num | Mode | Fan | Wane | Widevane
 0 | Auto | Auto | Auto | Swing
 1 | Dry | Quiet | Swing | <<
 2 | Cool | 1 | 1 | <
-3 | Heat | 2 | 2 | | |
+3 | Heat | 2 | 2 | \|
 4 | Fan | 3 | 3 | >
 5 | - | 4 | 4 | >>
 6 | - | - | 5 | <>
