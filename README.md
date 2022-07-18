@@ -34,3 +34,15 @@ WB-device | WB mqtt topics
  - Step 4: set Wifi information, save & reboot. Hvac will fall back to AP mode if WiFi connection fails (AP password sets to default SSID name from step 2).
  - Step 5: find the device IP with last 4 character MAC address in your router
  - Step 6: (optional): Set MQTT credentials for use with Wirenboard
+
+
+### WB ac terms
+Num | Mode | Fan | Wane | Widevane
+:--:|:--:|:--:|:--:|:--:
+0 | Auto | Auto | Auto | Swing
+1 | Dry | Quiet | Swing | <<
+2 | Cool | 1 | 1 | <
+3 | Heat | 2 | 2 | |
+4 | Fan | 3 | 3 | >
+5 | - | 4 | 4 | >>
+6 | - | - | 5 | <>
