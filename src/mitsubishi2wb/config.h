@@ -1,5 +1,5 @@
 
-const PROGMEM char* m2mqtt_version = "2022.01";
+const PROGMEM char* m2mqtt_version = "2022.07";
 
 //Define global variables for files
 #ifdef ESP32

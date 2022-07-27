@@ -317,13 +317,6 @@ bool loadMqtt() {
   mqtt_username = doc["mqtt_user"].as<String>();
   mqtt_password = doc["mqtt_pwd"].as<String>();
 
-  //write_log("=== START DEBUG MQTT ===");
-  //write_log("IP Server " + mqtt_server);
-  //write_log("IP Port " + mqtt_port);
-  //write_log("Username " + mqtt_username);
-  //write_log("Password " + mqtt_password);
-  //write_log("=== END DEBUG MQTT ===");
-
   mqtt_config = true;
   return true;
 }
