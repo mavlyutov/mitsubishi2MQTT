@@ -1341,12 +1341,16 @@ void loop() {
   if (!captive) {
     // Sync HVAC UNIT
     if (!hp.isConnected()) {
-      if (((millis() > (lastHpSync + HP_RETRY_INTERVAL_MS)) or lastHpSync == 0) and (hpConnectionRetries < HP_MAX_RETRIES)) {
+      // Use exponential backoff for retries, where each retry is double the length of the previous one.
+      unsigned long timeNextSync = (1 << hpConnectionRetries) * HP_RETRY_INTERVAL_MS + lastHpSync;
+      if (((millis() > timeNextSync) or lastHpSync == 0)) {
         lastHpSync = millis();
-        hpConnectionRetries++;
+         // If we've retried more than the max number of tries, keep retrying at that fixed interval, which is several minutes.
+         hpConnectionRetries = min(hpConnectionRetries + 1u, HP_MAX_RETRIES);
         hp.sync();
       }
     } else {
+        hpConnectionRetries = 0;
         hp.sync();
     }
 
