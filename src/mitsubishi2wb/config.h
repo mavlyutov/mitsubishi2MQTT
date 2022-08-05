@@ -5,10 +5,10 @@ const PROGMEM char* m2mqtt_version = "2022.07";
 #ifdef ESP32
   const PROGMEM char* wifi_conf = "/wifi.json";
   const PROGMEM char* mqtt_conf = "/mqtt.json";
-  const PROGMEM char* advance_conf = "/advance.json";
+  const PROGMEM char* unit_conf = "/unit.json";
   const PROGMEM char* console_file = "/console.log";
   // pinouts
-  const PROGMEM  uint8_t blueLedPin = 2;            // The ESP32 has an internal blue LED at D2 (GPIO 02)
+  const PROGMEM  uint8_t blueLedPin = 2; // The ESP32 has an internal blue LED at D2 (GPIO 02)
 #else
   const PROGMEM char* wifi_conf = "wifi.json";
   const PROGMEM char* mqtt_conf = "mqtt.json";
@@ -21,7 +21,7 @@ const PROGMEM  uint8_t redLedPin = 0;
 
 // Define global variables for network
 const PROGMEM char* hostnamePrefix = "HVAC_";
-const PROGMEM uint32_t WIFI_RETRY_INTERVAL_MS = 300000;
+const PROGMEM uint32_t WIFI_RETRY_INTERVAL_MS = 300000; // 5 min
 unsigned long wifi_timeout;
 bool wifi_config_exists;
 String hostname = "";

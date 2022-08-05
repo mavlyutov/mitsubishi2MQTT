@@ -98,7 +98,6 @@ void setup() {
     if (SPIFFS.exists(console_file)) {
       SPIFFS.remove(console_file);
     }
-    //write_log("Starting mitsubishi2wb");
     //Web interface
     server.on("/", handleRoot);
     server.on("/control", handleControl);
@@ -116,7 +115,6 @@ void setup() {
     lastHpSync = 0;
     hpConnectionRetries = 0;
     if (loadMqtt()) {
-      //write_log("Starting MQTT");
       String deviceName = hostname;
       deviceName.toLowerCase();
 
@@ -364,15 +362,12 @@ boolean initWifi() {
     }
   }
 
-  // Serial.println(F("\n\r \n\rStarting in AP mode"));
   WiFi.mode(WIFI_AP);
   wifi_timeout = millis() + WIFI_RETRY_INTERVAL_MS;
   WiFi.persistent(false); //fix crash esp32 https://github.com/espressif/arduino-esp32/issues/2025
   WiFi.softAPConfig(apIP, apIP, netMsk);
   WiFi.softAP(hostname.c_str());
   delay(2000); // VERY IMPORTANT
-  // Serial.print(F("IP address: "));
-  // Serial.println(WiFi.softAPIP());
   wifi_config = false;
   return false;
 }
