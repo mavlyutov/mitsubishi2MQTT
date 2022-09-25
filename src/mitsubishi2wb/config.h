@@ -47,8 +47,8 @@ String temp_topic, temp_set_topic;
 String room_temp_topic;
 
 // Customization
-uint8_t min_temp = 16; // Minimum temperature, check value from heatpump remote control
-uint8_t max_temp = 31; // Maximum temperature, check value from heatpump remote control
+float min_temp = 16.0; // Minimum temperature, check value from heatpump remote control
+float max_temp = 31.0; // Maximum temperature, check value from heatpump remote control
 String temp_step = "1"; // Temperature setting step, check value from heatpump remote control
 
 // sketch settings

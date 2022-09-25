@@ -57,7 +57,7 @@ HeatPump hp;
 unsigned long lastTempSend;
 unsigned long lastMqttRetry;
 unsigned long lastHpSync;
-unsigned long hpConnectionRetries;
+unsigned int hpConnectionRetries;
 
 //Local state
 StaticJsonDocument<JSON_OBJECT_SIZE(7)> rootInfo;
@@ -129,22 +129,19 @@ void setup() {
 
       // startup mqtt connection
       initMqtt();
-    }
-    else {
+    } else {
       //write_log("Not found MQTT config go to configuration page");
     }
     // Serial.println(F("Connection to HVAC. Stop serial log."));
     //write_log("Connection to HVAC");
     hp.setSettingsChangedCallback(hpSettingsChanged);
     hp.setStatusChangedCallback(hpStatusChanged);
-    //hp.setPacketCallback(_debug_topic_);
     hp.enableExternalUpdate(); // Allow Remote/Panel
     hp.connect(&Serial);
 
     readHeatPump();
     lastTempSend = millis();
-  }
-  else {
+  } else {
     dnsServer.start(DNS_PORT, "*", apIP);
     initCaptivePortal();
   }
@@ -340,8 +337,8 @@ bool loadUnit() {
   DynamicJsonDocument doc(capacity);
   deserializeJson(doc, buf.get());
   //unit
-  min_temp = doc["min_temp"].as<uint8_t>();
-  max_temp = doc["max_temp"].as<uint8_t>();
+  min_temp = doc["min_temp"].as<float>();
+  max_temp = doc["max_temp"].as<float>();
   temp_step = doc["temp_step"].as<String>();
   //mode
   String supportMode = doc["support_mode"].as<String>();
@@ -490,7 +487,6 @@ void handleSetup() {
     menuSetupPage.replace("_TXT_RESETCONFIRM_",FPSTR(txt_reset_confirm));
     sendWrappedHTML(menuSetupPage);
   }
-
 }
 
 void rebootAndSendPage() {
@@ -506,8 +502,7 @@ void handleMqtt() {
   if (server.method() == HTTP_POST) {
     saveMqtt(server.arg("mh"), server.arg("ml"), server.arg("mu"), server.arg("mp"));
     rebootAndSendPage();
-  }
-  else {
+  } else {
     String mqttPage =  FPSTR(html_page_mqtt);
     mqttPage.replace("_TXT_SAVE_", FPSTR(txt_save));
     mqttPage.replace("_TXT_BACK_", FPSTR(txt_back));
@@ -998,7 +993,7 @@ void hpStatusChanged(heatpumpStatus currentStatus) {
     rootInfo["roomTemperature"]  = currentStatus.roomTemperature;
 
     mqtt_client.publish(room_temp_topic.c_str(), String(rootInfo["roomTemperature"]).c_str(), true);
-    lastTempSend = millis(); //restart counter for waiting enought time for the unit to update before sending a state packet
+    lastTempSend = millis(); //restart counter for waiting enough time for the unit to update before sending a state packet
   }
 }
 
@@ -1064,7 +1059,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
       hp.setWideVaneSetting(rootInfo["wideVane"]);
       hp.update();
   } else if (strcmp(topic, temp_set_topic.c_str()) == 0) {
-    //float temperature = strtof(message, NULL);
     float temperature = message.toFloat();
     if (temperature >= min_temp && temperature <= max_temp) {
       rootInfo["temperature"] = temperature;
@@ -1107,7 +1101,7 @@ void sendWbMeta() {
   meta_topic = power_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), power_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(power_meta["type"]).c_str(), true);
 
   //mode
   capacity = JSON_OBJECT_SIZE(5) + 128;
@@ -1124,7 +1118,7 @@ void sendWbMeta() {
   meta_topic = mode_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), mode_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(mode_meta["type"]).c_str(), true);
   min_topic = meta_topic + "/min";
   mqtt_client.publish(min_topic.c_str(), String(mode_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
@@ -1145,7 +1139,7 @@ void sendWbMeta() {
   meta_topic = fan_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), fan_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(fan_meta["type"]).c_str(), true);
   min_topic = meta_topic + "/min";
   mqtt_client.publish(min_topic.c_str(), String(fan_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
@@ -1166,7 +1160,7 @@ void sendWbMeta() {
   meta_topic = vane_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), vane_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(vane_meta["type"]).c_str(), true);
   min_topic = meta_topic + "/min";
   mqtt_client.publish(min_topic.c_str(), String(vane_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
@@ -1187,7 +1181,7 @@ void sendWbMeta() {
   meta_topic = widevane_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), widevane_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(widevane_meta["type"]).c_str(), true);
   min_topic = meta_topic + "/min";
   mqtt_client.publish(min_topic.c_str(), String(widevane_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
@@ -1208,7 +1202,7 @@ void sendWbMeta() {
   meta_topic = temp_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), temp_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(temp_meta["type"]).c_str(), true);
   min_topic = meta_topic + "/min";
   mqtt_client.publish(min_topic.c_str(), String(temp_meta["min"]).c_str(), true);
   max_topic = meta_topic + "/max";
@@ -1227,7 +1221,7 @@ void sendWbMeta() {
   meta_topic = room_temp_topic + "/meta";
   mqtt_client.publish(meta_topic.c_str(), mqttOutput.c_str(), true);
   type_topic = meta_topic + "/type";
-  mqtt_client.publish(type_topic.c_str(), room_temp_meta["type"], true);
+  mqtt_client.publish(type_topic.c_str(), String(room_temp_meta["type"]).c_str(), true);
 }
 
 void mqttConnect() {
@@ -1350,15 +1344,15 @@ void loop() {
     }
 
     if (mqtt_config) {
-      //MQTT failed retry to connect
+      //MQTT failed, retry to connect
       if (mqtt_client.state() < MQTT_CONNECTED) {
         if ((millis() > (lastMqttRetry + MQTT_RETRY_INTERVAL_MS)) or lastMqttRetry == 0) {
           mqttConnect();
         }
       }
-      //MQTT config problem on MQTT do nothing
+      //MQTT config problem on MQTT, do nothing
       else if (mqtt_client.state() > MQTT_CONNECTED ) return;
-      //MQTT connected send status
+      //MQTT connected, send status
       else {
         hpStatusChanged(hp.getStatus());
         mqtt_client.loop();
