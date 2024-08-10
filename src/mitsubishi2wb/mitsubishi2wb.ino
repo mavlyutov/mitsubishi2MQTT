@@ -16,7 +16,7 @@
     ESP8266WebServer server(80);  // ESP8266 web
 #endif
 
-#include <ArduinoJson.h>          // json to process MQTT: ArduinoJson 6.21.3
+#include <ArduinoJson.h>          // json to process MQTT: ArduinoJson 7.1.0
 #include <PubSubClient.h>         // MQTT: PubSubClient 2.8.0
 #include <DNSServer.h>            // DNS for captive portal
 #include <ArduinoOTA.h>           // for OTA
@@ -60,7 +60,7 @@ unsigned long lastHpSync;
 unsigned int hpConnectionRetries;
 
 // Local state
-StaticJsonDocument<JSON_OBJECT_SIZE(7)> rootInfo;
+JsonDocument rootInfo;
 
 // Web OTA
 int uploaderror = 0;
@@ -164,8 +164,7 @@ bool loadWifi() {
     // Allocate a buffer to store contents of the file.
     std::unique_ptr<char[]> buf(new char[size]);
     configFile.readBytes(buf.get(), size);
-    const size_t capacity = JSON_OBJECT_SIZE(4) + 130;
-    DynamicJsonDocument doc(capacity);
+    JsonDocument doc;
     deserializeJson(doc, buf.get());
     hostname = doc["hostname"].as<String>();
     ap_ssid = doc["ap_ssid"].as<String>();
@@ -180,8 +179,7 @@ bool loadWifi() {
 }
 
 void saveMqtt(String mqttHost, String mqttPort, String mqttUser, String mqttPwd) {
-    const size_t capacity = JSON_OBJECT_SIZE(4) + 400;
-    DynamicJsonDocument doc(capacity);
+    JsonDocument doc;
     // if mqtt port is empty, we use default port
     if (mqttPort[0] == '\0') mqttPort = "1883";
     doc["mqtt_host"] = mqttHost;
@@ -194,8 +192,7 @@ void saveMqtt(String mqttHost, String mqttPort, String mqttUser, String mqttPwd)
 }
 
 void saveUnit(String supportMode, String minTemp, String maxTemp, String tempStep) {
-    const size_t capacity = JSON_OBJECT_SIZE(5) + 200;
-    DynamicJsonDocument doc(capacity);
+    JsonDocument doc;
     // if minTemp is empty, we use default 16
     if (minTemp.isEmpty()) minTemp = 16;
     doc["min_temp"] = minTemp;
@@ -215,8 +212,7 @@ void saveUnit(String supportMode, String minTemp, String maxTemp, String tempSte
 }
 
 void saveWifi(String apSsid, String apPwd, String hostName, String otaPwd) {
-    const size_t capacity = JSON_OBJECT_SIZE(4) + 130;
-    DynamicJsonDocument doc(capacity);
+    JsonDocument doc;
     doc["ap_ssid"] = apSsid;
     doc["ap_pwd"] = apPwd;
     doc["hostname"] = hostName;
@@ -273,8 +269,7 @@ bool loadMqtt() {
     }
     std::unique_ptr<char[]> buf(new char[size]);
     configFile.readBytes(buf.get(), size);
-    const size_t capacity = JSON_OBJECT_SIZE(4) + 400;
-    DynamicJsonDocument doc(capacity);
+    JsonDocument doc;
     deserializeJson(doc, buf.get());
     mqtt_server = doc["mqtt_host"].as<String>();
     mqtt_port = doc["mqtt_port"].as<String>();
@@ -302,8 +297,7 @@ bool loadUnit() {
     std::unique_ptr<char[]> buf(new char[size]);
 
     configFile.readBytes(buf.get(), size);
-    const size_t capacity = JSON_OBJECT_SIZE(3) + 200;
-    DynamicJsonDocument doc(capacity);
+    JsonDocument doc;
     deserializeJson(doc, buf.get());
     // unit
     min_temp = doc["min_temp"].as<float>();
@@ -1082,8 +1076,7 @@ void sendWbMeta() {
     String mqttOutput, driver_topic, name_topic, type_topic, meta_topic, min_topic, max_topic;
 
     // main
-    capacity = JSON_OBJECT_SIZE(2) + 128;
-    DynamicJsonDocument main_meta(capacity);
+    JsonDocument main_meta;
     main_meta["driver"] = "mitsubishi2wb";
     title = main_meta.createNestedObject("title");
     title["en"] = hostname;
@@ -1097,8 +1090,7 @@ void sendWbMeta() {
     mqtt_client.publish(name_topic.c_str(), main_meta["title"]["en"], true);
 
     // power
-    capacity = JSON_OBJECT_SIZE(3) + 128;
-    DynamicJsonDocument power_meta(capacity);
+    JsonDocument power_meta;
     power_meta["type"] = "switch";
     power_meta["readonly"] = false;
     title = power_meta.createNestedObject("title");
@@ -1112,8 +1104,7 @@ void sendWbMeta() {
     mqtt_client.publish(type_topic.c_str(), String(power_meta["type"]).c_str(), true);
 
     // mode
-    capacity = JSON_OBJECT_SIZE(5) + 128;
-    DynamicJsonDocument mode_meta(capacity);
+    JsonDocument mode_meta;
     mode_meta["type"] = "range";
     mode_meta["readonly"] = false;
     mode_meta["min"] = 0.0;
@@ -1133,8 +1124,7 @@ void sendWbMeta() {
     mqtt_client.publish(max_topic.c_str(), String(mode_meta["max"]).c_str(), true);
 
     // fan
-    capacity = JSON_OBJECT_SIZE(5) + 128;
-    DynamicJsonDocument fan_meta(capacity);
+    JsonDocument fan_meta;
     fan_meta["type"] = "range";
     fan_meta["readonly"] = false;
     fan_meta["min"] = 0.0;
@@ -1154,8 +1144,7 @@ void sendWbMeta() {
     mqtt_client.publish(max_topic.c_str(), String(fan_meta["max"]).c_str(), true);
 
     // vane
-    capacity = JSON_OBJECT_SIZE(5) + 128;
-    DynamicJsonDocument vane_meta(capacity);
+    JsonDocument vane_meta;
     vane_meta["type"] = "range";
     vane_meta["readonly"] = false;
     vane_meta["min"] = 0.0;
@@ -1175,8 +1164,7 @@ void sendWbMeta() {
     mqtt_client.publish(max_topic.c_str(), String(vane_meta["max"]).c_str(), true);
 
     // widevane
-    capacity = JSON_OBJECT_SIZE(5) + 128;
-    DynamicJsonDocument widevane_meta(capacity);
+    JsonDocument widevane_meta;
     widevane_meta["type"] = "range";
     widevane_meta["readonly"] = false;
     widevane_meta["min"] = 0.0;
@@ -1196,8 +1184,7 @@ void sendWbMeta() {
     mqtt_client.publish(max_topic.c_str(), String(widevane_meta["max"]).c_str(), true);
 
     // temperature
-    capacity = JSON_OBJECT_SIZE(5) + 128;
-    DynamicJsonDocument temp_meta(capacity);
+    JsonDocument temp_meta;
     temp_meta["type"] = "temperature";
     temp_meta["readonly"] = false;
     temp_meta["min"] = min_temp;
@@ -1217,8 +1204,7 @@ void sendWbMeta() {
     mqtt_client.publish(max_topic.c_str(), String(temp_meta["max"]).c_str(), true);
 
     // room_temperature
-    capacity = JSON_OBJECT_SIZE(3) + 128;
-    DynamicJsonDocument room_temp_meta(capacity);
+    JsonDocument room_temp_meta;
     room_temp_meta["type"] = "temperature";
     room_temp_meta["readonly"] = true;
     title = room_temp_meta.createNestedObject("title");
