@@ -104,7 +104,7 @@ const char txt_upload_aborted[] PROGMEM = "Upload aborted";
 const char txt_upload_code[] PROGMEM = "Upload error code ";
 const char txt_upload_error[] PROGMEM = "Update error code (see Updater.cpp) ";
 const char txt_upload_sucess[] PROGMEM = "Successful";
-const char txt_upload_refresh[] PROGMEM = "Refresh in";
+const char txt_upload_refresh[] PROGMEM = "Refresh in ";
 
 //Page Init
 const char txt_init_title[] PROGMEM = "Initial setup";
