@@ -1,5 +1,5 @@
 
-const PROGMEM char* m2wb_version = "2023.10";
+const PROGMEM char* m2wb_version = "2024.08";
 
 //Define global variables for files
 #ifdef ESP32
@@ -53,7 +53,7 @@ String temp_step = "1"; // Temperature setting step, check value from heatpump r
 
 // sketch settings
 const PROGMEM uint32_t SEND_ROOM_TEMP_INTERVAL_MS = 45000; // 45 seconds (anything less may cause bouncing)
-const PROGMEM uint32_t MQTT_RETRY_INTERVAL_MS = 1000; // 1 second
+const PROGMEM uint32_t MQTT_RETRY_INTERVAL_MS = 5000; // 5 seconds
 const PROGMEM uint32_t HP_RETRY_INTERVAL_MS = 1000; // 1 second
 const PROGMEM uint32_t HP_MAX_RETRIES = 10; // Double the interval between retries up to this many times, then keep retrying forever at that maximum interval.
 // Default values give a final retry interval of 1000ms * 2^10, which is 1024 seconds, about 17 minutes.
